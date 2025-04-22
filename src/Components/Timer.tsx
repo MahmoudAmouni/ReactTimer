@@ -12,7 +12,12 @@ export default function Timer({name,duration}:TProps) {
   useEffect(()=>{
     if(isRunning){
       timer = setInterval(() => {
-        setRemainingTime((prevTime) => prevTime - 50);
+        setRemainingTime((prevTime) => {
+          if (prevTime <= 0) {
+            return prevTime;
+          }
+          return prevTime - 50;
+        });
       }, 50);
       interval.current = timer;
     }else if(interval.current){
