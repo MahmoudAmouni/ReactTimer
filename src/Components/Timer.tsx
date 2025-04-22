@@ -5,18 +5,20 @@ export default function Timer({name,duration}:TProps) {
   const interval =useRef<number | null>(null)
   const [remainingTime,setRemainingTime] = useState(duration *1000);
   const {isRunning} = useTimerContext();
-
+  let timer:number
   if(remainingTime <=0 && interval.current){
     clearInterval(interval.current)
   }
   useEffect(()=>{
     if(isRunning){
-      const timer = setInterval(() => {
+      timer = setInterval(() => {
         setRemainingTime((prevTime) => prevTime - 50);
       }, 50);
       interval.current = timer;
+    }else if(interval.current){
+      clearInterval(interval.current)
     }
-    
+    return () => clearInterval(timer);
 
   },[isRunning])
   const time = (remainingTime/1000).toFixed(2)
