@@ -56,12 +56,12 @@ function timerReducer(state:TimerState,action:Action):TimerState{
             ...state,isRunning:true
         }
     }
-    if (action.type === "STOP_TIMER") {
+    //if the action is stop timer
       return {
         ...state,
         isRunning: false,
       };
-    }
+    
 }
 
 function TimerContextProvider({children}:TCPProps){
