@@ -51,6 +51,17 @@ function timerReducer(state:TimerState,action:Action):TimerState{
             ]
         }
     }
+    if(action.type==="START_TIMER"){
+        return{
+            ...state,isRunning:true
+        }
+    }
+    if (action.type === "STOP_TIMER") {
+      return {
+        ...state,
+        isRunning: false,
+      };
+    }
 }
 
 function TimerContextProvider({children}:TCPProps){
