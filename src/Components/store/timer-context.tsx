@@ -14,7 +14,7 @@ const initialState:TimerState ={
 }
 
 interface TCValue extends TimerState{
-    addTimer:(timerData:TimerState)=>void;
+    addTimer:(timerData:Timer)=>void;
     stopTimer:()=>void;
     startTimer:()=>void;
 } 
@@ -39,12 +39,18 @@ interface StopTimer{
 }
 interface AddTimer{
     type:"ADD_TIMER"
-    payload:TimerState
+    payload:Timer
 }
 type  Action = StartTimer | StopTimer | AddTimer;
 
 function timerReducer(state:TimerState,action:Action):TimerState{
-
+    if(action.type==="ADD_TIMER"){
+        return{
+            ...state,timers:[
+                ...state.timers,{name:action.payload.name,duration:action.payload.duration}
+            ]
+        }
+    }
 }
 
 function TimerContextProvider({children}:TCPProps){
