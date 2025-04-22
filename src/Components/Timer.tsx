@@ -1,9 +1,10 @@
 import Container from './UI/Container';
-
-export default function Timer() {
+import { Timer as TProps } from './store/timer-context';
+export default function Timer({name,duration}:TProps) {
   return (
     <Container as="article">
-      <h2>TODO: TIMER NAME</h2>
+      <h2>{name}</h2>
+      <p>{duration}</p>
     </Container>
   );
 }

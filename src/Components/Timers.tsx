@@ -1,3 +1,15 @@
+import { useTimerContext } from "./store/timer-context";
+import Timer from "./Timer";
+
 export default function Timers() {
-  return <ul>{/* TODO ... */}</ul>;
+  const {timers} = useTimerContext();
+  return (
+    <ul>
+      {timers.map((el) => (
+        <li key={el.name}>
+          <Timer {...el} />
+        </li>
+      ))}
+    </ul>
+  );
 }
