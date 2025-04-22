@@ -1,4 +1,4 @@
-import { createContext, ReactNode, useContext } from "react";
+import { createContext, ReactNode, useContext, useReducer } from "react";
 
 interface Timer{
     name:string;
@@ -8,9 +8,13 @@ interface TimerState{
     timers:Timer[];
     isRunning:boolean;
 }
+const initialState:TimerState ={
+    timers:[],
+    isRunning:false
+}
 
 interface TCValue extends TimerState{
-    addTimer:(timerData:Timer)=>void;
+    addTimer:(timerData:TimerState)=>void;
     stopTimer:()=>void;
     startTimer:()=>void;
 } 
@@ -27,14 +31,38 @@ if(timerctx === null) throw new Error("Ctx is null");
 return timerctx;
 }
 
+interface StartTimer{
+    type:"START_TIMER"
+}
+interface StopTimer{
+    type:"STOP_TIMER"
+}
+interface AddTimer{
+    type:"ADD_TIMER"
+    payload:TimerState
+}
+type  Action = StartTimer | StopTimer | AddTimer;
+
+function timerReducer(state:TimerState,action:Action):TimerState{
+
+}
+
 function TimerContextProvider({children}:TCPProps){
 
+    const [timerState, dispatch] = useReducer(timerReducer,initialState);
+
     const ctx:TCValue ={
-        timers:[],
-        isRunning:false,
-        addTimer(timerData:Timer){},
-        startTimer(){},
-        stopTimer(){}
+        timers:timerState.timers,
+        isRunning:timerState.isRunning,
+        addTimer(timerData){
+            dispatch({type:"ADD_TIMER",payload:timerData});
+        },
+        startTimer(){
+            dispatch({type:"START_TIMER"})
+        },
+        stopTimer(){
+            dispatch({ type: "STOP_TIMER" });
+        }
     }
     return <TimerContext.Provider value={ctx}>
         {children}
