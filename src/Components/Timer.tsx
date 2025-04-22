@@ -1,4 +1,4 @@
-import Container from './UI/Container.tsx';
+import Container from './UI/Container';
 
 export default function Timer() {
   return (
